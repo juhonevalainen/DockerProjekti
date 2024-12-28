@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Docker</title>
+</head>
+<body>
+    <script>
+        // Huolehtii viestin lähettämisestä.
+        function sendFormText() {
+            var data = document.getElementById("textToSend").value;
+            event.preventDefault()
+
+
+            fetch("http://localhost:5000/newmessage", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => {
+                if (res.status == 200) {
+                    informer_message = "Teksti lähetetty."
+                }
+                else {
+                    informer_message = "Virhe lähetettäessä."
+                }
+                sendFormErrorMessage(informer_message)
+                
+                console.log("REQ RES:", res.status)
+            }).catch((error) => {
+                console.log(error)
+                sendFormErrorMessage("Ei yhteyttä palvelimeen:" + error)
+            })
+        }
+
+        // Virheteksti viestiä lähetettäessä.
+        function sendFormErrorMessage(message) {
+            document.getElementById("informer").innerHTML = message
+        }
+
+    </script>
+    
+    <div class="container_top">
+        <p>Otsikko</p>
+    </div>
+    <div class="container">
+        <div>
+            <p>Kirjoita lähetettävä viesti.</p>
+            <form id="form">
+                <textarea id="textToSend">
+                </textarea>
+                <br>
+                <input type="submit" onclick="sendFormText()"> 
+            </form>
+            <p id="informer"></p>
+        </div>
+    </div>
+    <div class="container">
+        <div>
+            <p>Palvelimelta haetut viestit:</p>
+        </div>
+    </div>
+</body>
+</html> 
+
+<!--
+
+            <form action="http://localhost:5000/newmessage" method="post">
+                <textarea name="usermessage">
+                </textarea>
+                <br>
+                <input type="submit">
+            </form>
+-->
