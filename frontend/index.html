@@ -10,7 +10,7 @@
         function sendFormText() {
             var data = document.getElementById("textToSend").value;
             event.preventDefault()
-            console.log(JSON.stringify(data))
+            console.log("TESTI:" + JSON.stringify(data))
 
 
             fetch("http://localhost:5000/newmessage", {

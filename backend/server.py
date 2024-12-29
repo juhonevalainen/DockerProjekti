@@ -13,16 +13,24 @@ def hello_world():
 @app.route("/newmessage", methods=["POST", "GET"])
 def newMessage():
     if request.method == "POST":
-        received_message = request.form
-        saveNewMessage(received_message)
+        received_message = request.data
+        saveMessage(str(received_message))
         return "<p>Vastaanotettu.</p>"
     else:
         return "<p>Ei vastaanotettu.</p>"
 
 # Tallennetaan vastaanotettu viesti JSON muodossa.
-def saveNewMessage(message):
-    newMessage = json.dumps({"message": str(message)})
+def saveMessage(message):
+    newJson = {
+        "message": message
+    }
     
+    with open("messages.json", "r+") as f:
+        load_data = json.load(f)
+        load_data["allMessages"].append(newJson)
+        f.seek(0)
+        json.dump(load_data, f, indent=4)
+
 
 @app.route("/findmessage", methods=["GET"])
 def findMessage():
@@ -39,3 +47,9 @@ def page_not_found(error):
 @app.route('/hello/<name>')
 def hello(name=None):
     return render_template('hello.html', person=name)
+
+#{
+#    "allMessages": [
+#           
+#    ]
+#}
