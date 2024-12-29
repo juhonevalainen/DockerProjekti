@@ -10,6 +10,7 @@
         function sendFormText() {
             var data = document.getElementById("textToSend").value;
             event.preventDefault()
+            console.log(JSON.stringify(data))
 
 
             fetch("http://localhost:5000/newmessage", {
@@ -21,6 +22,9 @@
             }).then(res => {
                 if (res.status == 200) {
                     informer_message = "Teksti lähetetty."
+
+                    // Päivitetään listaus viesteistä.
+                    findMessages()
                 }
                 else {
                     informer_message = "Virhe lähetettäessä."
@@ -39,6 +43,16 @@
             document.getElementById("informer").innerHTML = message
         }
 
+        function findMessages() {
+            allMessages = fetch("http://localhost:5000/findmessage")
+            .then((response) => response.json())
+            .then((json) => drawMessages(json));
+            //console.log("ALLMESSAGES:" + allMessages)
+        }
+        function drawMessages(messageJson) {
+            testi = messageJson
+            document.getElementById("messages").innerHTML = messageJson.message
+        }
     </script>
     
     <div class="container_top">
@@ -59,6 +73,7 @@
     <div class="container">
         <div>
             <p>Palvelimelta haetut viestit:</p>
+            <p id="messages"></p>
         </div>
     </div>
 </body>
