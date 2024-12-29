@@ -10,6 +10,7 @@ CORS(app)
 def hello_world():
     return "<p>Hello, World!</p>"
 
+# Vastaanotetaan uusi viesti tallennettavaksi.
 @app.route("/newmessage", methods=["POST", "GET"])
 def newMessage():
     if request.method == "POST":
@@ -21,24 +22,30 @@ def newMessage():
 
 # Tallennetaan vastaanotettu viesti JSON muodossa.
 def saveMessage(message):
-    newJson = {
-        "message": message
-    }
-    
+    newJson = {"message": message}
     with open("messages.json", "r+") as f:
         load_data = json.load(f)
         load_data["allMessages"].append(newJson)
         f.seek(0)
         json.dump(load_data, f, indent=4)
 
-
+# Palautetaan kaikki tallennetut viestit.
 @app.route("/findmessage", methods=["GET"])
 def findMessage():
-    with open("messages.json", "r") as f:
-        load_data = json.load(f)
-    #return json.dumps({"message": "Kokeiluviesti on nyt tässä!.,?"})
-    return load_data
+    f = open("messages.json")
+    data = json.load(f)
+    f.close()
+    return data
+
     
+@app.route("/removemessage", methods=["POST"])
+def removemessage():
+    cleanMessages = {"allMessages": []}
+    with open("messages.json", "w") as f:
+        json.dump(cleanMessages, f)
+    return "Jee"
+
+
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -46,13 +53,15 @@ def page_not_found(error):
 
 
 
-@app.route('/hello/')
-@app.route('/hello/<name>')
-def hello(name=None):
-    return render_template('hello.html', person=name)
+#@app.route('/hello/')
+#@app.route('/hello/<name>')
+#def hello(name=None):
+#    return render_template('hello.html', person=name)
 
 #{
 #    "allMessages": [
 #           
 #    ]
 #}
+
+#{"allMessages": [{"message": "Koiro"}]}

@@ -1,16 +1,1 @@
-{
-    "allMessages": [
-        {
-            "message": "b'\"1\"'"
-        },
-        {
-            "message": "b'\"2\"'"
-        },
-        {
-            "message": "b'\"        aaa        \"'"
-        },
-        {
-            "message": "b'\"bbasdasd\"'"
-        }
-    ]
-}
+{"allMessages": []}
