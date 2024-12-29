@@ -34,7 +34,10 @@ def saveMessage(message):
 
 @app.route("/findmessage", methods=["GET"])
 def findMessage():
-    return json.dumps({"message": "Kokeiluviesti on nyt tässä!.,?"})
+    with open("messages.json", "r") as f:
+        load_data = json.load(f)
+    #return json.dumps({"message": "Kokeiluviesti on nyt tässä!.,?"})
+    return load_data
     
 
 @app.errorhandler(404)

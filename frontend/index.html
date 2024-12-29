@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Docker</title>
 </head>
-<body>
+<body onload="findMessages()">
     <script>
         // Huolehtii viestin lähettämisestä.
         function sendFormText() {
@@ -49,9 +49,22 @@
             .then((json) => drawMessages(json));
             //console.log("ALLMESSAGES:" + allMessages)
         }
+
         function drawMessages(messageJson) {
-            testi = messageJson
-            document.getElementById("messages").innerHTML = messageJson.message
+            // Tyhjennetään lista ennen täyttämistä.
+            
+            document.getElementById("messageArea").innerHTML = ""
+            messageArray = messageJson["allMessages"]
+
+            const p_element = document.createElement("p");
+            const p_br = document.createElement("br")
+            for (let i = 0; i < messageArray.length; i++) {
+                p_element_text = document.createTextNode(messageArray[i].message)
+                p_element.appendChild(p_element_text)
+                document.getElementById("messageArea").appendChild(p_element)
+            }
+
+            //document.getElementById("messages").innerHTML = messageJson.message
         }
     </script>
     
@@ -73,18 +86,10 @@
     <div class="container">
         <div>
             <p>Palvelimelta haetut viestit:</p>
-            <p id="messages"></p>
+            <div id="messageArea">
+
+            </div>
         </div>
     </div>
 </body>
 </html> 
-
-<!--
-
-            <form action="http://localhost:5000/newmessage" method="post">
-                <textarea name="usermessage">
-                </textarea>
-                <br>
-                <input type="submit">
-            </form>
--->

@@ -1,10 +1,16 @@
 {
     "allMessages": [
         {
-            "message": "b'\"             aaa   asddasasdads\"'"
+            "message": "b'\"1\"'"
         },
         {
-            "message": "b'\"             aaa   asddasasdads\"'"
+            "message": "b'\"2\"'"
+        },
+        {
+            "message": "b'\"        aaa        \"'"
+        },
+        {
+            "message": "b'\"bbasdasd\"'"
         }
     ]
 }
