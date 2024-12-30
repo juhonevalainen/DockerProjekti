@@ -1,0 +1,13 @@
+services:
+  frontend:
+    container_name: frontend
+    image: fronttesti3
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+  backend:
+    container_name: backend
+    image: palvelintesti1
+    ports:
+      - 5000:5000
