@@ -1,5 +1,5 @@
 body {
-    background-color: #E7E8D1;
+    background-color: #FFFFFF;
 }
 
 textarea {
@@ -8,10 +8,10 @@ textarea {
 }
 .container_top {
     display: grid;
-    background-color:  #B85042;
+    background-color:  #00ABE4;
     padding: 1px;
     column-gap: 100px;
-    width: 80%;
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -19,16 +19,16 @@ textarea {
 
 .container {
     display: grid;
-    background-color: #E7E8D1;
+    background-color: #E9F1FA;
     padding: 1px;
-    width: 80%;
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
 }
 
 .container > div {
     border: 0px solid black;
-    background-color: #A7BEAE;
+    background-color: #E9F1FA;
     width: 100%;
     margin-left: auto;
     margin-right: auto;

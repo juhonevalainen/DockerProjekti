@@ -6,9 +6,9 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+#@app.route("/")
+#def hello_world():
+#    return "<p>Hello, World!</p>"
 
 # Vastaanotetaan uusi viesti tallennettavaksi.
 @app.route("/newmessage", methods=["POST", "GET"])
@@ -37,7 +37,7 @@ def findMessage():
     f.close()
     return data
 
-    
+# Poistetaan kaikki viestit.
 @app.route("/removemessage", methods=["POST"])
 def removemessage():
     cleanMessages = {"allMessages": []}
@@ -45,23 +45,6 @@ def removemessage():
         json.dump(cleanMessages, f)
     return "Jee"
 
-
-
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
-
-
-
-#@app.route('/hello/')
-#@app.route('/hello/<name>')
-#def hello(name=None):
-#    return render_template('hello.html', person=name)
-
-#{
-#    "allMessages": [
-#           
-#    ]
-#}
-
-#{"allMessages": [{"message": "Koiro"}]}
