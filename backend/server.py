@@ -2,7 +2,6 @@ from flask import Flask, redirect, url_for, request, render_template
 from flask_cors import CORS
 import json
 
-# pip install flask-cors
 app = Flask(__name__)
 CORS(app)
 
