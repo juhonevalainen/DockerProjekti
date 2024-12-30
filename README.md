@@ -1,11 +1,52 @@
 # DockerProjekti
+### Tietoa
 Pilvipalvelut -kurssin tehtävä.
 
-Projekti on jaettu kolmeen osaan, mitkä ovat frontend, palvelin ja tietokanta. Frontendin kautta saadaan yhteys palvelimelle ja tämän kautta tietokantaan. Käyttäjä voi tallentaa palvelimelle tekstiä.
+Projektin sisältö on jaettu kahteen osaan, mitkä ovat etusivu eli frontend, sekä palvelin eli backend. Kummastakin etusivusta ja palvelimesta tehdään kontit, mitkä voivat olla yhteydessä toisiinsa. Etusivun kautta saadaan yhteys palvelimelle. Käyttäjä voi tallentaa palvelimelle tekstiä mikä näkyy etusivulla. Avatessaan etusivun tämä tarkistaa saadaanko palvelimeen yhteys. Jos saadaan, niin käyttäjä voi lähettää tekstiä palvelimelle. Lähetetyt tekstit näkyvät etusivulla ja ne voidaan myös poistaa. Kun palvelimeen ei saada yhteyttä ilmoittaa frontend siitä käyttäjälle, eikä tällöin voida lähettää tekstiä.
 
-Avatessaan frontendin tämä tarkistaa saadaanko palvelimeen yhteys. Jos saadaan, niin käyttäjä voi lähettää tekstiä palvelimelle. Lähetetyt tekstit näkyvät etusivulla. Kun palvelimeen ei saada yhteyttä ilmoittaa frontend siitä käyttäjälle, eikä tällöin voida lähettää tekstiä.
+### Käyttöönotto
+Palvelun saa käyttöön osoitteeseen http://localhost ajamalla Docker Composella komennon
+```
+docker-compose up
+```
 
-Palvelin vastaanottaa käyttäjän tekstin, sekä lähettää käyttäjälle jo tallennetut tekstit. Tietokanta on yhteydessä palvelimeen, minne tallennetaan tekstit.
+### Etusivu - frontend
+Etusivu käyttää peruskuvana on **Nginx** -palvelimen versio **stable-alpine3.20-perl**. Tälle on avattuna portit 80:80 joiden kautta siihen voidaan olla yhteydessä. Sivu http://localhost yrittää ottaa yhteyttä palvelimen osoitteeseen http://localhost:5000 ja tekee sinne POST ja GET pyyntöjä. Sivulla on kolme funktiota jotka ovat seuraavat.
+
+Kaikki tallennetut viestit pyydetään GET pyynnöllä osoitteesta
+```
+http://localhost:5000/findmessage
+``` 
+Uusi viesti lähetetään POST pyynnöllä osoitteeseen
+```
+http://localhost:5000/newmessage
+```
+Viestien poistoa pyydetään POST pyynnöllä osoitteesta
+```
+http://localhost:5000/removemessage
+```
+
+### Palvelin - backend
+Palvelin käyttää peruskuvanaan **Pythonin** versiota **3.14.0a3-alpine3.21**. Kontille varmistetaan, että **pip** on asennettu ja tämän kautta asennetaan **Flask** palvelu, sekä **flask-cors**, jotta projektia voi ajaa samalla tietokoneella. Kontille on avattu portit 5000:5000 Saadessaan pyynnön osoitteeseen http://localhost:5000/newmessage viesti tallennetaan tiedostoon **data/messages.json**. Tästä samasta tiedostosta myös noudetaan tai poistetaan kaikki viestit. 
+
+Viestit on tallennettu json-muodossa käyttäen muotoa 
+```
+{
+    "allMessages": [
+        {
+            "message": "Viesti"
+        },
+        {
+            "message": Toinen viesti
+        },
+        ...
+    ]
+}
+```
+
+Palvelimelle on muodostettu volume nimeltä **message_data** mikä jakaa tiedoston **data/messages.json** käyttäjälle tallennettavaksi.
+
+/findmessage
 
 
 Tehtävä:          
