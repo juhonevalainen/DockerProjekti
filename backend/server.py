@@ -18,7 +18,7 @@ def newMessage():
 # Tallennetaan vastaanotettu viesti JSON muodossa.
 def saveMessage(message):
     newJson = {"message": message}
-    with open("messages.json", "r+") as f:
+    with open("./data/messages.json", "r+") as f:
         load_data = json.load(f)
         load_data["allMessages"].append(newJson)
         f.seek(0)
@@ -27,7 +27,7 @@ def saveMessage(message):
 # Palautetaan kaikki tallennetut viestit.
 @app.route("/findmessage", methods=["GET"])
 def findMessage():
-    f = open("messages.json")
+    f = open("./data/messages.json")
     data = json.load(f)
     f.close()
     return data
@@ -36,7 +36,7 @@ def findMessage():
 @app.route("/removemessage", methods=["POST"])
 def removemessage():
     cleanMessages = {"allMessages": []}
-    with open("messages.json", "w") as f:
+    with open("./data/messages.json", "w") as f:
         json.dump(cleanMessages, f)
     return "Viestit poistettu."
 

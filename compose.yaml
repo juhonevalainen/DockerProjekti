@@ -1,13 +1,19 @@
 services:
   frontend:
     container_name: frontend
-    image: fronttesti3
+    #image: fronttesti3
+    build: ./frontend
     ports:
       - 80:80
     depends_on:
       - backend
   backend:
     container_name: backend
-    image: palvelintesti1
+    #image: servu2
+    build: ./backend
+    volumes:
+      - message_data:/app/data/
     ports:
       - 5000:5000
+volumes:
+  message_data:
