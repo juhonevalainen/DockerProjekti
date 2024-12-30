@@ -6,7 +6,7 @@
 </head>
 <body onload="findMessages()">
     <script>
-
+        var serverAddress = "http://localhost:5000"
         // Huolehtii viestin lähettämisestä palvelimelle.
         function sendFormText(value) {
             // Jos arvo on 1, niin lähetetään tekstiä, jos 0 niin pyydetään viestien poistamista.
@@ -21,7 +21,7 @@
             var data = document.getElementById("textToSend").value;
             event.preventDefault()
             // Lähetetään viesti JSON muodossa ja ilmoitetaan jos se onnistui.
-            fetch("http://localhost:5000" + fetchAddress, {
+            fetch(serverAddress + fetchAddress, {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: {
@@ -30,9 +30,9 @@
             }).then(res => {
                 if (res.status == 200) {
                     if (value == 0) {
-                        informer_message = "Tekstit poistettu."
+                        informer_message = "Viestit poistettu."
                     } else {
-                        informer_message = "Teksti lähetetty."
+                        informer_message = "Viesti lähetetty."
                     }
                     
                     // Päivitetään listaus viesteistä.
@@ -57,20 +57,19 @@
         // Haetaan palvelimelta viestit.
         function findMessages() {
             
-            allMessages = fetch("http://localhost:5000/findmessage")
+            allMessages = fetch(serverAddress + "/findmessage")
             .then((response) => response.json())
             .then((json) => drawMessages(json))
             .catch((error) => {
                 console.log(error)
                 sendFormErrorMessage("Ei yhteyttä palvelimeen: " + error)
             })
-            console.log(allMessages)
-            
         }
 
         // Näytetään jokainen palautettu viesti allekkain.
         function drawMessages(messageJson) {
-            console.log("VIESTIT"+messageJson)
+            //kokeiluVar = messageJson["allMessages"][0].message
+            console.log(messageJson)
             // Tyhjennetään lista ennen täyttämistä.
             document.getElementById("messageArea").innerHTML = ""
             messageArray = messageJson["allMessages"]

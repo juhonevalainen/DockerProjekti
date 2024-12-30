@@ -1,7 +1,7 @@
 {
-    "allMessages": [
-        {
-            "message": "b'\"     kkk           \"'"
-        }
-    ]
+ "allMessages": [
+  {
+   "message": "b'\"\\xc3\\x84\\xc3\\xa4kk\\xc3\\xb6nen\"'"
+  }
+ ]
 }
