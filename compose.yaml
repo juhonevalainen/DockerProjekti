@@ -1,7 +1,7 @@
 services:
   frontend:
     container_name: frontend
-    #image: fronttesti3
+    image: DockerProjekti/frontend
     build: ./frontend
     ports:
       - 80:80
@@ -9,7 +9,7 @@ services:
       - backend
   backend:
     container_name: backend
-    #image: servu2
+    image: DockerProjekti/backend
     build: ./backend
     volumes:
       - message_data:/app/data/
