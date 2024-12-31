@@ -9,8 +9,10 @@ CORS(app)
 @app.route("/newmessage", methods=["POST", "GET"])
 def newMessage():
     if request.method == "POST":
+        #received_message = request.form
+        #saveMessage(received_message)
         received_message = request.data
-        saveMessage(str(received_message))
+        saveMessage(received_message.decode("utf-8"))
         return "<p>Vastaanotettu.</p>"
     else:
         return render_template('404.html'), 404
@@ -18,11 +20,14 @@ def newMessage():
 # Tallennetaan vastaanotettu viesti JSON muodossa.
 def saveMessage(message):
     newJson = {"message": message}
-    with open("./data/messages.json", "r+") as f:
-        load_data = json.load(f)
-        load_data["allMessages"].append(newJson)
-        f.seek(0)
-        json.dump(load_data, f, indent=1)
+    with open("./data/messages.json", "r") as openMessages:
+        loadMessages = json.load(openMessages)
+
+    loadMessages["allMessages"].append(newJson) 
+
+    with open("./data/messages.json", "w") as writeMessages:
+       json.dump(loadMessages, writeMessages, indent=1, ensure_ascii=False)
+
 
 # Palautetaan kaikki tallennetut viestit.
 @app.route("/findmessage", methods=["GET"])
@@ -39,7 +44,7 @@ def findMessage():
 @app.route("/removemessage", methods=["POST"])
 def removemessage():
     if request.method == "POST":
-        cleanMessages = {"allMessages": []}
+        cleanMessages = {"allMessages": [{"message": ""}]}
         with open("./data/messages.json", "w") as f:
             json.dump(cleanMessages, f)
         return "Viestit poistettu."
